@@ -1,18 +1,24 @@
 #ifndef PUSH_SWAP_H
 #define PUSH_SWAP_H
 
-#include<stdio.h>
+#include"../libft/includes/libft.h"
+#include"../ftprintf/includes/ft_printf.h"
 #include<stdlib.h>
 #include<unistd.h>
+#include<limits.h>
 
 typedef struct stack
 {
     int value;
     struct stack *next;
+    struct stack *prev;
 }ft_stack;
 
 //for inputs
 void error_exit(void);
+void validate_input(ft_stack *stack);
+ft_stack *parse_input(int argc, char **argv);
+ft_stack *add_to_stack(ft_stack *stack, int value);
 ft_stack *check_input(int argc, char **argv);
 int is_valid_number(char *s);
 int ft_isdigit(char c);
@@ -32,9 +38,6 @@ void    rr(ft_stack **stack_a, ft_stack **stack_b);
 void    rra(ft_stack **stack_a);
 void    rrb(ft_stack **stack_b);
 void    rrr(ft_stack **stack_a, ft_stack **stack_b);
-
-//utils
-int	ft_atoi(const char *str);
 
 //implementation of the algorithm
 void    sort_small_stack(ft_stack **stack_a, ft_stack **stack_b);

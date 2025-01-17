@@ -5,17 +5,17 @@ void print_stack(ft_stack *stack)
 {
     while (stack)
     {
-        printf("%d -> ", stack->value);
+        ft_printf("%d -> ", stack->value);
         stack = stack->next;
     }
-    printf("NULL\n");
+    ft_printf("NULL\n");
 }
 
 int main(int argc, char **argv)
 {
     ft_stack *stack_a = check_input(argc, argv);
 
-    printf("Stack:\n");
+    ft_printf("Stack:\n");
     print_stack(stack_a);
 
     free_stack(stack_a);

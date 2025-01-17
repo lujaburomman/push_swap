@@ -8,7 +8,11 @@ void sa(ft_stack **stack_a)
         return;
     temp = (*stack_a)->next;
     (*stack_a)->next = temp ->next;
+    temp->prev = (*stack_a)->prev;
+    (*stack_a)->prev=temp;
     temp->next = *stack_a;
+    if(temp->next)
+        temp->next->prev = *stack_a;
     *stack_a = temp;
 }
 
@@ -32,7 +36,11 @@ void pa(ft_stack **stack_a, ft_stack **stack_b)
         return;
     temp = *stack_b;
     *stack_b = (*stack_b)->next;
+    if(*stack_b)
+        (*stack_b)->prev = NULL;
     temp->next = *stack_a;
+    if(*stack_a)
+        (*stack_a)->prev = temp; 
     *stack_a = temp;
 }
 
@@ -51,12 +59,13 @@ void ra(ft_stack **stack_a)
         return;
     temp = *stack_a;
     *stack_a = (*stack_a)->next;
-    temp->next = NULL;
-
+    (*stack_a)->prev = NULL;
     tail = *stack_a;
     while (tail->next)
         tail = tail->next;
     tail->next = temp;
+    temp->prev = tail;
+    temp->next = NULL;
 }
 
 void rb(ft_stack **stack_b)
@@ -86,14 +95,17 @@ void rra(ft_stack **stack_a)
         tail = tail->next;
     }
     tail->next = *stack_a;
+    (*stack_a)->prev = tail;
     *stack_a = tail;
     prev->next = NULL;
+    tail ->next = NULL;
 }
 
 void rrb(ft_stack **stack_b)
 {
     rra(stack_b);
 }
+
 
 void rrr(ft_stack **stack_a, ft_stack **stack_b)
 {

@@ -19,17 +19,17 @@ int is_valid_number(char *s)
     i = 0;
     if(s[i] == '+' || s[i] == '-')
         i++;
-    if(!s)
+    if(!s[i])
         return(0);
     while(s[i])
     {
         if(!ft_isdigit(s[i]))
             return(0);
-        if(!is_within_int_range(s))
-            return(0);
         i++;
     }
-     return(1);
+    if(!is_within_int_range(s))
+        return(0);
+    return(1);
 }
 
 // Custom function to check if the number is within the range of INT_MIN to INT_MAX
@@ -38,14 +38,10 @@ int is_within_int_range(char *s)
     long long value;
     int i;
     int sign;
-    int min;
-    int max;
     
     value = 0;
     i = 0;
     sign = 1;
-    min = -2147483648;
-    max = 2147483647;
     if (s[i] == '-' || s[i] == '+')
     {
         if (s[i] == '-')
@@ -58,50 +54,82 @@ int is_within_int_range(char *s)
             return (0);
         value = value * 10 + (s[i] - '0');
         i++;
-        if (value * sign > max || value * sign < min)
+        if (value * sign > INT_MAX || value * sign < INT_MIN)
             return (0);
     }
     return (1);
 }
 
 //checks all the inputs
-ft_stack *check_input(int argc, char **argv)
+//function to add a new node to the stack
+ft_stack *add_to_stack(ft_stack *stack, int value)
 {
-    ft_stack *stack = NULL;
     ft_stack *new_node;
-    int value;
-    int i = 1;
 
-    if (argc < 2)
-        return (NULL);
+    new_node = malloc(sizeof(ft_stack));
+    if (!new_node)
+        error_exit();
+    new_node->value = value;
+    new_node->next = stack;
+    new_node->prev = NULL;
+    if(stack)
+        stack->prev = new_node;
+    return (new_node);
+}
+
+// Parses input arguments and creates the stack
+ft_stack *parse_input(int argc, char **argv)
+{
+    ft_stack *stack;
+    int value;
+    int i;
+
+    i = 1;
+    stack = NULL;
     while (i < argc)
     {
         if (!is_valid_number(argv[i]))
             error_exit();
         value = ft_atoi(argv[i]);
-        new_node = malloc(sizeof(ft_stack));
-        if (!new_node)
-            error_exit();
-        new_node->value = value;
-        new_node->next = stack;
-        stack = new_node;
+        stack = add_to_stack(stack, value);
         i++;
     }
+    return (stack);
+}
+
+// Validates the stack, checks for duplicates)
+void validate_input(ft_stack *stack)
+{
     if (check_duplicates(stack))
     {
         free_stack(stack);
         error_exit();
     }
-    return (stack);
 }
 
+// Main function to check and validate input
+ft_stack *check_input(int argc, char **argv)
+{
+    ft_stack *stack;
+
+    if (argc < 2)
+        return (NULL);
+
+    stack = parse_input(argc, argv);
+    validate_input(stack);
+
+    return (stack);
+}
 //check whether there are dupplicates or not
-int check_duplicates(ft_stack *stack) {
+int check_duplicates(ft_stack *stack)
+{
     ft_stack *current;
 
-    while (stack) {
+    while (stack)
+    {
         current = stack->next;
-        while (current) {
+        while (current)
+        {
             if (current->value == stack->value)
                 return (1);
             current = current->next;
@@ -110,7 +138,6 @@ int check_duplicates(ft_stack *stack) {
     }
     return (0);
 }
-
 
 //to free stack
 void free_stack(ft_stack *stack)
