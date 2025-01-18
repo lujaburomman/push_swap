@@ -8,10 +8,6 @@ void error_exit(void)
 }
 
 //checks if each input is valid
-int ft_isdigit(char c)
-{
-    return(c >= '0' && c <= '9');
-}
 
 int is_valid_number(char *s)
 {
@@ -65,16 +61,30 @@ int is_within_int_range(char *s)
 ft_stack *add_to_stack(ft_stack *stack, int value)
 {
     ft_stack *new_node;
+    ft_stack *current;
 
     new_node = malloc(sizeof(ft_stack));
     if (!new_node)
         error_exit();
     new_node->value = value;
-    new_node->next = stack;
+    new_node->next = NULL;
     new_node->prev = NULL;
-    if(stack)
-        stack->prev = new_node;
-    return (new_node);
+
+    if (stack == NULL)
+    {
+        return new_node;
+    }
+    else
+    {
+        current = stack;
+        while (current->next != NULL)
+        {
+            current = current->next;
+        }
+        current->next = new_node;
+        new_node->prev = current;
+        return stack; 
+    }
 }
 
 // Parses input arguments and creates the stack

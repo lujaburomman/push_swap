@@ -21,7 +21,6 @@ ft_stack *parse_input(int argc, char **argv);
 ft_stack *add_to_stack(ft_stack *stack, int value);
 ft_stack *check_input(int argc, char **argv);
 int is_valid_number(char *s);
-int ft_isdigit(char c);
 int is_within_int_range(char *s);
 int check_duplicates(ft_stack *stack);
 void free_stack(ft_stack *stack);
