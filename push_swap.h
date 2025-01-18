@@ -39,8 +39,16 @@ void    rrb(ft_stack **stack_b);
 void    rrr(ft_stack **stack_a, ft_stack **stack_b);
 
 //implementation of the algorithm
-void    sort_small_stack(ft_stack **stack_a, ft_stack **stack_b);
-void    sort_three(ft_stack **stack_a);
-int     find_min_index(ft_stack *stack);
+void sort_two(ft_stack **stack_a);
+void sort_three(ft_stack **stack_a);
+void sort_four_or_five(ft_stack **stack_a, ft_stack **stack_b);
+void radix_sort(ft_stack **stack_a, ft_stack **stack_b);
+
+//the main sorting function
+void sort_stack(ft_stack **stack_a, ft_stack **stack_b);
+
+//helper functions for the sorting
+int stack_size(ft_stack *stack);
+int find_min(ft_stack *stack);
 
 #endif

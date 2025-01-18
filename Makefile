@@ -10,14 +10,14 @@ FTPRINTF = $(FTPRINTF_DIR)/libftprintf.a
 
 # Rules
 NAME = push_swap
-SRC_DIR = src
-INCLUDES_DIR = includes
-SRCS = $(SRC_DIR)/push_swap.c $(SRC_DIR)/input_utils.c $(SRC_DIR)/operations.c $(SRC_DIR)/main.c
-OBJ_DIR = obj
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+
+SRCS = push_swap.c sort_utils.c input_utils.c operations.c main.c
+
+OBJS = $(SRCS:%.c=%.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-INCLUDES = -I$(LIBFT_INCLUDES) -I$(FTPRINTF_INCLUDES) -I$(INCLUDES_DIR) -I.
+INCLUDES = -I$(LIBFT_INCLUDES) -I$(FTPRINTF_INCLUDES) -I.
 
 # Build the project
 all: $(NAME)
@@ -26,8 +26,7 @@ $(NAME): $(OBJS) $(LIBFT) $(FTPRINTF)
 	$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft -L$(FTPRINTF_DIR) -lftprintf -o $(NAME)
 
 # Rule to compile .c files into .o files
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	@mkdir -p $(OBJ_DIR)
+%.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # Build libft
@@ -40,7 +39,7 @@ $(FTPRINTF):
 
 # Clean object files
 clean:
-	rm -rf $(OBJ_DIR)
+	rm -rf $(OBJS)
 	make -C $(LIBFT_DIR) clean
 	make -C $(FTPRINTF_DIR) clean
 

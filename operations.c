@@ -14,17 +14,20 @@ void sa(ft_stack **stack_a)
     if(temp->next)
         temp->next->prev = *stack_a;
     *stack_a = temp;
+    ft_printf("sa\n");
 }
 
 void sb(ft_stack **stack_b)
 {
     sa(stack_b);
+    ft_printf("sb\n");
 }
 
 void ss(ft_stack **stack_a, ft_stack **stack_b)
 {
     sa(stack_a);
     sb(stack_b);
+    ft_printf("ss\n");
 }
 
 //push operations
@@ -42,11 +45,13 @@ void pa(ft_stack **stack_a, ft_stack **stack_b)
     if(*stack_a)
         (*stack_a)->prev = temp; 
     *stack_a = temp;
+    ft_printf("pa\n");
 }
 
 void pb(ft_stack **stack_b, ft_stack **stack_a)
 {
     pa(stack_b, stack_a);
+    ft_printf("pb\n");
 }
 
 //rotate operations
@@ -66,17 +71,20 @@ void ra(ft_stack **stack_a)
     tail->next = temp;
     temp->prev = tail;
     temp->next = NULL;
+    ft_printf("ra\n");
 }
 
 void rb(ft_stack **stack_b)
 {
     ra(stack_b);
+    ft_printf("rb\n");
 }
 
 void rr(ft_stack **stack_a, ft_stack **stack_b)
 {
     ra(stack_a);
     rb(stack_b);
+    ft_printf("rr\n");
 }
 
 //reverse rotate operations
@@ -90,7 +98,8 @@ void rra(ft_stack **stack_a)
     prev = NULL;
     tail = *stack_a;
 
-    while (tail->next) {
+    while (tail->next)
+    {
         prev = tail;
         tail = tail->next;
     }
@@ -99,11 +108,13 @@ void rra(ft_stack **stack_a)
     *stack_a = tail;
     prev->next = NULL;
     tail ->next = NULL;
+    ft_printf("rra\n");
 }
 
 void rrb(ft_stack **stack_b)
 {
     rra(stack_b);
+    ft_printf("rrb\n");
 }
 
 
@@ -111,4 +122,5 @@ void rrr(ft_stack **stack_a, ft_stack **stack_b)
 {
     rra(stack_a);
     rrb(stack_b);
+    ft_printf("rrr\n");
 }
