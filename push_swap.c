@@ -37,46 +37,54 @@ void sort_three(ft_stack **stack_a)
 void sort_four_or_five(ft_stack **stack_a, ft_stack **stack_b)
 {
     int min;
+    int size = stack_size(*stack_a);
 
-    while (stack_size(*stack_a) > 3)
+    while (size > 3)
     {
         min = find_min(*stack_a);
         while ((*stack_a)->value != min)
-            ra(stack_a);
+        {
+            if (find_index(*stack_a, min) <= size / 2)
+                ra(stack_a);
+            else
+                rra(stack_a);
+        }
         pb(stack_a, stack_b);
+        size--;
     }
-
     sort_three(stack_a);
-
     while (*stack_b)
+    {
         pa(stack_a, stack_b);
+        if ((*stack_a)->next && (*stack_a)->value > (*stack_a)->next->value)
+            sa(stack_a);
+    }
 }
 
 void radix_sort(ft_stack **stack_a, ft_stack **stack_b)
 {
-    int max_bits;
-    int size;
+    ft_stack *head_a;
     int i;
     int j;
-
-    size = stack_size(*stack_a);
-    max_bits = 0;
-    while ((size >> max_bits) != 0)
-        max_bits++;
+    int size;
+    int max_bits;
 
     i = 0;
+    head_a = *stack_a;
+    size = stack_size(head_a);
+    max_bits = get_max_bits(stack_a);
     while (i < max_bits)
     {
         j = 0;
-        while (j < size)
+        while (j++ < size)
         {
-            if ((((*stack_a)->value >> i) & 1) == 1)
+            head_a = *stack_a;
+            if (((head_a->index >> i) & 1) == 1)
                 ra(stack_a);
             else
                 pb(stack_a, stack_b);
-            j++;
         }
-        while (*stack_b)
+        while (stack_size(*stack_b) != 0)
             pa(stack_a, stack_b);
         i++;
     }
@@ -85,8 +93,10 @@ void radix_sort(ft_stack **stack_a, ft_stack **stack_b)
 void sort_stack(ft_stack **stack_a, ft_stack **stack_b)
 {
     int size;
-    
+    int *values = NULL;
+
     size = stack_size(*stack_a);
+
     if (size == 2)
         sort_two(stack_a);
     else if (size == 3)
@@ -94,5 +104,11 @@ void sort_stack(ft_stack **stack_a, ft_stack **stack_b)
     else if (size == 4 || size == 5)
         sort_four_or_five(stack_a, stack_b);
     else
+    {
+        values = store_original_values(*stack_a, size);
+        convert_to_indices(stack_a, values);
         radix_sort(stack_a, stack_b);
+        restore_original_values(stack_a, values);
+        free(values);
+    }
 }

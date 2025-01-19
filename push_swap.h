@@ -10,9 +10,12 @@
 typedef struct stack
 {
     int value;
+    int index;  // Added index field
     struct stack *next;
     struct stack *prev;
-}ft_stack;
+} ft_stack;
+
+void print_stack(ft_stack *stack);
 
 //for inputs
 void error_exit(void);
@@ -50,5 +53,14 @@ void sort_stack(ft_stack **stack_a, ft_stack **stack_b);
 //helper functions for the sorting
 int stack_size(ft_stack *stack);
 int find_min(ft_stack *stack);
+int find_index(ft_stack *stack, int value);
+int *store_original_values(ft_stack *stack, int size);
+void convert_to_indices(ft_stack **stack_a, int *values);
+void restore_original_values(ft_stack **stack_a, int *values);
+
+// Radix sort helper functions
+int get_max_bits(ft_stack **stack);
+void sort_values(int *values, int size);
+void assign_indices(ft_stack **stack_a, int *values, int size);
 
 #endif

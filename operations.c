@@ -4,16 +4,19 @@
 void sa(ft_stack **stack_a)
 {
     ft_stack *temp;
+
     if (!stack_a || !(*stack_a) || !(*stack_a)->next)
         return;
+
     temp = (*stack_a)->next;
-    (*stack_a)->next = temp ->next;
-    temp->prev = (*stack_a)->prev;
-    (*stack_a)->prev=temp;
-    temp->next = *stack_a;
-    if(temp->next)
+    (*stack_a)->next = temp->next;
+    if (temp->next)
         temp->next->prev = *stack_a;
+    temp->prev = (*stack_a)->prev;
+    (*stack_a)->prev = temp;
+    temp->next = *stack_a;
     *stack_a = temp;
+
     ft_printf("sa\n");
 }
 
@@ -48,9 +51,23 @@ void pa(ft_stack **stack_a, ft_stack **stack_b)
     ft_printf("pa\n");
 }
 
-void pb(ft_stack **stack_b, ft_stack **stack_a)
+void pb(ft_stack **stack_a, ft_stack **stack_b)
 {
-    pa(stack_b, stack_a);
+    ft_stack *temp;
+
+    if (!stack_a || !(*stack_a))
+        return;
+
+    temp = *stack_a;
+    *stack_a = (*stack_a)->next;
+    if (*stack_a)
+        (*stack_a)->prev = NULL;
+
+    temp->next = *stack_b;
+    if (*stack_b)
+        (*stack_b)->prev = temp;
+    *stack_b = temp;
+
     ft_printf("pb\n");
 }
 
@@ -95,6 +112,7 @@ void rra(ft_stack **stack_a)
 
     if (!stack_a || !(*stack_a) || !(*stack_a)->next)
         return;
+
     prev = NULL;
     tail = *stack_a;
 
@@ -103,11 +121,13 @@ void rra(ft_stack **stack_a)
         prev = tail;
         tail = tail->next;
     }
+
     tail->next = *stack_a;
     (*stack_a)->prev = tail;
     *stack_a = tail;
     prev->next = NULL;
-    tail ->next = NULL;
+    tail->prev = NULL;
+
     ft_printf("rra\n");
 }
 
