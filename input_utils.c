@@ -99,7 +99,10 @@ ft_stack *parse_input(int argc, char **argv)
     while (i < argc)
     {
         if (!is_valid_number(argv[i]))
+        {
+            free_stack(stack);
             error_exit();
+        }
         value = ft_atoi(argv[i]);
         stack = add_to_stack(stack, value);
         i++;

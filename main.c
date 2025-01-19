@@ -20,11 +20,11 @@ int main(int argc, char **argv)
     stack_b = NULL;
     if(!stack_a)
         return(1);
-    ft_printf("initial Stack:\n");
-    print_stack(stack_a);
+    // ft_printf("initial Stack:\n");
+    // print_stack(stack_a);
     sort_stack(&stack_a, &stack_b);
-    ft_printf("sorted stack:\n");
-    print_stack(stack_a);
+    // ft_printf("sorted stack:\n");
+    // print_stack(stack_a);
     free_stack(stack_a);
     return 0;
 }
