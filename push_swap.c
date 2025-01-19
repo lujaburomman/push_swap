@@ -73,10 +73,6 @@ void radix_sort(ft_stack **stack_a, ft_stack **stack_b)
     head_a = *stack_a;
     size = stack_size(head_a);
     max_bits = get_max_bits(stack_a);
-
-    // Debug: Print max_bits
-    ft_printf("Max bits: %d\n", max_bits);
-
     while (i < max_bits)
     {
         j = 0;
