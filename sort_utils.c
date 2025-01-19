@@ -80,7 +80,6 @@ void convert_to_indices(ft_stack **stack_a, int *values)
 
     sort_values(values, size);
     assign_indices(stack_a, values, size);
-    free(values);
 }
 
 void restore_original_values(ft_stack **stack_a, int *values)
