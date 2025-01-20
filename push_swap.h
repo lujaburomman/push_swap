@@ -10,7 +10,7 @@
 typedef struct stack
 {
     int value;
-    int index;  // Added index field
+    int index;
     struct stack *next;
     struct stack *prev;
 } ft_stack;
