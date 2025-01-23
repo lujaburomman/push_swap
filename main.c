@@ -1,30 +1,49 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: laburomm <laburomm@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 13:34:31 by laburomm          #+#    #+#             */
+/*   Updated: 2025/01/21 13:56:36 by laburomm         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void print_stack(ft_stack *stack)
+// Main function to check and validate input
+t_stack	*check_input(int argc, char **argv)
 {
-    while (stack)
-    {
-        ft_printf("%d -> ", stack->value);
-        stack = stack->next;
-    }
-    ft_printf("NULL\n");
+	t_stack	*stack;
+
+	if (argc < 2)
+		return (NULL);
+	stack = parse_input(argc, argv);
+	validate_input(stack);
+	return (stack);
 }
 
-int main(int argc, char **argv)
+void	print_stack(t_stack *stack)
 {
-    ft_stack *stack_a;
-    ft_stack *stack_b;
+	while (stack)
+	{
+		ft_printf("%d -> ", stack->value);
+		stack = stack->next;
+	}
+	ft_printf("NULL\n");
+}
 
-    stack_a = check_input(argc, argv);
-    stack_b = NULL;
-    if(!stack_a)
-        return(1);
-    // ft_printf("initial Stack:\n");
-    // print_stack(stack_a);
-    sort_stack(&stack_a, &stack_b);
-    // ft_printf("sorted stack:\n");
-    // print_stack(stack_a);
-    free_stack(stack_a);
-    return 0;
+int	main(int argc, char **argv)
+{
+	t_stack	*stack_a;
+	t_stack	*stack_b;
+
+	stack_a = check_input(argc, argv);
+	stack_b = NULL;
+	if (!stack_a)
+		return (1);
+	sort_stack(&stack_a, &stack_b);
+	free_stack(stack_a);
+	return (0);
 }
